@@ -59,6 +59,32 @@ Node* Create_node(int new_val)
     return nd;
 }
 
+size_t i = 0;
+
+void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
+{
+
+    fprintf(f_dot, "\tnode%p[shape=Mrecord, color=purple, label=\" {{<f0> data=%d} | { <l>LEFT | <r>RIGHT}}\"]\n", &nd -> data, nd -> data);
+
+
+
+    if(nd -> left)
+    {
+        fprintf(f_dot, "\tnode%p:<l> -> node%p;\n", &nd->data, &nd->left->data);
+
+        i += 1;
+        Print_tree_to_dot_file(nd -> left, f_dot);
+    }
+
+    if(nd -> right)
+    {
+        fprintf(f_dot, "\tnode%p:<r> -> node%p;\n", &nd->data, &nd->right->data);
+
+        i += 1;
+        Print_tree_to_dot_file(nd -> right, f_dot);
+    }
+}
+
 void Dot_dump(Node* nd, int num_graph)
 {
     FILE* f_dot = fopen("output/tree.dot", "w");
@@ -68,13 +94,11 @@ void Dot_dump(Node* nd, int num_graph)
     if(ferror(f_dot))
         fprintf(stderr, "FILE OPEN ERROR!!!\n");
 
-    fprintf(f_dot, "digraph TREE%d {\n\trankdir=HR;\n\tbgcolor = \"green:yellow\";\n", num_graph);
+    fprintf(f_dot, "digraph TREE%d {\n\tbgcolor = \"lightgrey:lightblue\";\n", num_graph);
 
-    // fprintf(f_dot, "\tsubgraph cluster0 {\n\t\tnode [style=filled,color=white];\n"
-    //                "\t\tstyle=filled;\n\t\tcolor=lightgrey;\n");
+    fprintf(f_dot, "\tlabel=\"TREE BY Evgeniy Rogov\";\n\tfontsize=30;\n\tfontname=\"Times-Roman\";\n\tlabelloc=\"t\";\n");
 
-
-
+    Print_tree_to_dot_file(nd, f_dot);
 
     fprintf(f_dot, "}");
 
@@ -101,12 +125,9 @@ void Dot_file_compile(int num_pucture)
 
 void D_tor(Node* nd)
 {
-    if(nd -> left || nd -> right)
-        if(nd -> right)
-            D_tor(nd -> right);
-        else
-            D_tor(nd -> left);
-    else
-        nd = NULL;
-        free(nd);
+    if(nd -> right)
+        D_tor(nd -> right);
+    if(nd -> left)
+        D_tor(nd -> left);
+    free(nd);
 }

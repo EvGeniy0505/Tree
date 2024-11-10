@@ -10,8 +10,13 @@ int main()
 
     Insert(nd, 35);
 
+    Insert(nd, 30);
+
+
     Print(nd);
     putchar('\n');
+
+    Dot_dump(nd, 1);
 
     D_tor(nd);
 
