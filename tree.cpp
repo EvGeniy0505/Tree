@@ -4,7 +4,7 @@
 #include "tree.h"
 
 
-Node* C_tor(int first_tree_val)
+Node* Tree_ctor(int first_tree_val)
 {
     Node* nd = Create_node(first_tree_val);
 
@@ -59,28 +59,19 @@ Node* Create_node(int new_val)
     return nd;
 }
 
-size_t i = 0;
-
 void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {
-
     fprintf(f_dot, "\tnode%p[shape=Mrecord, color=purple, label=\" {{<f0> data=%d} | { <l>LEFT | <r>RIGHT}}\"]\n", &nd -> data, nd -> data);
-
-
 
     if(nd -> left)
     {
         fprintf(f_dot, "\tnode%p:<l> -> node%p;\n", &nd->data, &nd->left->data);
-
-        i += 1;
         Print_tree_to_dot_file(nd -> left, f_dot);
     }
 
     if(nd -> right)
     {
         fprintf(f_dot, "\tnode%p:<r> -> node%p;\n", &nd->data, &nd->right->data);
-
-        i += 1;
         Print_tree_to_dot_file(nd -> right, f_dot);
     }
 }
@@ -123,11 +114,13 @@ void Dot_file_compile(int num_pucture)
     system(com);
 }
 
-void D_tor(Node* nd)
+void Tree_dtor(Node* nd)
 {
     if(nd -> right)
-        D_tor(nd -> right);
+        Tree_dtor(nd -> right);
+
     if(nd -> left)
-        D_tor(nd -> left);
+        Tree_dtor(nd -> left);
+
     free(nd);
 }

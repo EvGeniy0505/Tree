@@ -8,7 +8,7 @@ struct Node
     Node* right;
 };
 
-Node* C_tor(int first_tree_val);
+Node* Tree_ctor(int first_tree_val);
 
 Node* Create_node(int new_val);
 
@@ -20,4 +20,4 @@ void Dot_dump(Node* nd, int num_graph);
 
 void Print(Node* nd);
 
-void D_tor(Node* nd);
+void Tree_dtor(Node* nd);

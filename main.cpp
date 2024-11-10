@@ -3,7 +3,7 @@
 
 int main()
 {
-    Node* nd = C_tor(50);
+    Node* nd = Tree_ctor(50);
 
     for(int i = 0; i < 10; i++)
         Insert(nd, i * 11);
@@ -12,13 +12,13 @@ int main()
 
     Insert(nd, 30);
 
-
     Print(nd);
+
     putchar('\n');
 
     Dot_dump(nd, 1);
 
-    D_tor(nd);
+    Tree_dtor(nd);
 
     return 0;
 }
